@@ -1,0 +1,113 @@
+/* Chat Container */
+.app-chat-history {
+    height: 500px; /* Adjust height as needed */
+    overflow-y: scroll; /* Make chat history scrollable */
+    padding-right: 15px; /* Allow space for scroll bar */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual Chat Messages */
+.chat-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+    position: relative;
+    max-width: 80%;
+}
+
+/* User Message */
+.user-message {
+    background-color: #d1e7dd; /* Light green for user messages */
+    margin-left: auto; /* Align to right */
+}
+
+/* Bot Response */
+.bot-message {
+    background-color: #e2e3e5; /* Light gray for bot messages */
+}
+
+/* Message Content */
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between message and response */
+}
+
+/* User Message Text */
+.message-text {
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+/* Bot Response Text */
+.message-response {
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+/* Timestamp */
+.timestamp {
+    font-size: 12px;
+    color: #888;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-style: italic;
+}
+
+/* Wrapper to keep messages aligned at the bottom */
+.chat-history-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Align to bottom */
+}
+
+/* Styling for the Table */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px; /* Space above the table */
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+/* Table Header */
+.table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: bold;
+}
+
+/* Table Badge */
+.table .badge {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+/* Hover Effect on Table Rows */
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Custom Scrollbar Styles (For better look) */
+.app-chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+
+.app-chat-history::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.app-chat-history::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

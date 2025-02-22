@@ -1,0 +1,404 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.small-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  padding: 5px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: rgb(249, 250, 251);
+  height: 100vh;
+}
+
+/* Container styles */
+.chat-container {
+  height: 100vh;
+  padding: 2rem 1rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.chat-window {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Zencia AI Text - White, Centered, and Bold */
+.zencia-ai-text {
+  color: white;                  /* White color */
+  font-size: 1.25rem;            /* Adjust font size */
+  font-weight: bold;             /* Make text bold */
+  text-align: center;            /* Center the text */
+  width: 100%;                   /* Ensure it takes full width for centering */
+  margin: 0;                     /* Remove any default margin */
+}
+
+/* Header styles */
+.chat-header {
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profile img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.profile-info h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profile-info p {
+  font-size: 0.875rem;
+  color: #bfdbfe;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.icon:hover {
+  color: #bfdbfe;
+}
+
+/* Chat area styles */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: rgb(249, 250, 251);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  display: flex;
+}
+
+.message.received {
+  justify-content: flex-start;
+}
+
+.message.sent {
+  justify-content: flex-end;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.message.received .message-content {
+  background-color: white;
+  color: #1f2937;
+}
+
+.message.sent .message-content {
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+}
+
+.message p {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  display: block;
+  text-align: right;
+}
+
+.message.received .timestamp {
+  color: #6b7280;
+}
+
+.message.sent .timestamp {
+  color: #bfdbfe;
+}
+
+/* Input area styles */
+.input-area {
+  padding: 1rem;
+  background-color: white;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+textarea {
+  flex-grow: 1;
+  resize: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  background-color: #f3f4f6;
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s;
+  min-width: 0;
+}
+
+textarea:focus {
+  outline: 2px solid #E81F76; /* Updated to pink */
+  box-shadow: 0 0 0 2px rgba(232, 31, 118, 0.2);
+}
+
+/* Send Button */
+.send-button {
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem; /* Set a minimum width to maintain a good size */
+  height: 2.5rem;  /* Set a fixed height */
+  max-width: 3rem; /* Ensure button does not stretch */
+}
+
+.send-button:hover {
+  background-color: #c31461; /* Darker shade of pink */
+}
+
+.send-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(232, 31, 118, 0.2);
+}
+
+/* Scrollbar styles */
+.chat-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 3px;
+}
+
+.chat-area::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+/* Delete Confirmation Popup Inside the Chat Area */
+.delete-popup {
+  position: absolute;  /* Position it inside the chat container */
+  top: 50%;  /* Center vertically */
+  left: 50%;  /* Center horizontally */
+  transform: translate(-50%, -50%);  /* Adjust position to be exactly at the center */
+  background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 70%;  /* Adjust width as needed */
+  text-align: center;
+  z-index: 2000;  /* Ensure it's above other elements */
+}
+
+.delete-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.delete-message {
+  color: black;  /* Black color for the confirmation message */
+  font-size: 16px;
+}
+
+.delete-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 10px;
+}
+
+.delete-buttons button {
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+  border: none;
+  padding: 5px 10px;  /* Shorten the buttons */
+  border-radius: 5px;
+  cursor: pointer;
+  width: 45%;  /* Make buttons short and equally spaced */
+}
+
+.delete-buttons button:hover {
+  background-color: #c31461; /* Darker shade of pink */
+}
+
+/* Speaker Button - Blue */
+.speaker-button {
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: none;
+}
+
+.speaker-button:hover {
+  background-color: #c31461; /* Darker shade of pink */
+}
+
+/* Floating Chat Icon */
+.chat-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #E81F76; /* Updated to pink */
+  padding: 15px;
+  border-radius: 50%;    /* Circle shape */
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Chat Window Styles */
+.chat-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;        /* Increased width */
+  height: 600px;       /* Increased height */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: all 0.3s ease; /* Smooth transition for minimizing */
+}
+
+/* Minimized Chat Window (Hides the chat completely) */
+.chat-container.minimized {
+  display: none;
+}
+
+/* Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Header Icons */
+.header-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Chat Area */
+.chat-area {
+  padding: 10px;
+  overflow-y: auto;  /* Makes the chat area scrollable if content exceeds the height */
+  flex: 1;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Delete Confirmation Popup (Inside Chat Area) */
+.delete-popup {
+  position: absolute;  /* Position it inside the chat container */
+  top: 50%;  /* Center vertically */
+  left: 50%;  /* Center horizontally */
+  transform: translate(-50%, -50%);  /* Adjust position to be exactly at the center */
+  background-color: rgba(255, 255, 255, 0.9);  /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 70%;  /* Adjust width as needed */
+  text-align: center;
+  z-index: 2000;  /* Ensure it's above other elements */
+}
+
+.delete-popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.delete-message {
+  color: black;  /* Black color for the confirmation message */
+  font-size: 16px;
+}
+
+.delete-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 10px;
+}
+
+.delete-buttons button {
+  background-color: #E81F76; /* Updated to pink */
+  color: white;
+  border: none;
+  padding: 5px 10px;  /* Shorten the buttons */
+  border-radius: 5px;
+  cursor: pointer;
+  width: 45%;  /* Make buttons short and equally spaced */
+}
+
+.delete-buttons button:hover {
+  background-color: #c31461; /* Darker shade of pink */
+}
