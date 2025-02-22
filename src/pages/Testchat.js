@@ -154,7 +154,7 @@ const Testchat = () => {
   };
 
   return (
-    <div>
+    < >
       <div className="chat-icon" onClick={handleChatButtonClick}>
         <FaComments size={40} color="#fff" />
       </div>
@@ -248,7 +248,7 @@ const Testchat = () => {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
