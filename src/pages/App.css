@@ -1,9 +1,5 @@
 /* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 .small-btn {
   width: 30px;
@@ -12,11 +8,6 @@
   padding: 5px;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: rgb(249, 250, 251);
-  height: 100vh;
-}
 
 /* Container styles */
 .chat-container {
