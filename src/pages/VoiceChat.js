@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { FaShareAlt, FaDownload, FaTrashAlt, FaComments, FaMinus } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaComments, FaDownload, FaMinus, FaShareAlt, FaTrashAlt } from "react-icons/fa";
 import "./App.css";
 
-const Testchat = () => {
+const Voicechat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -198,4 +198,4 @@ const Testchat = () => {
   );
 };
 
-export default Testchat;
+export default Voicechat;

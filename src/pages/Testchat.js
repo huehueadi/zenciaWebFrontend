@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FaComments, FaDownload, FaMinus, FaShareAlt, FaTrashAlt } from "react-icons/fa";
-import "./App.css";
 
 const Testchat = () => {
   const [message, setMessage] = useState("");
