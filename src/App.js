@@ -37,9 +37,7 @@ function App() {
         <Route path="/chat-test/:userid" element={<Testchat />} />
 
 
-        {/* Layout route, with protected sub-routes */}
         <Route element={<Layout />}>
-          {/* Protected Routes for Users */}
           <Route path="/" 
             element={<PrivateRoute element={<Chats />} redirectToAdmin={true} />} />
           <Route path="chats" 
@@ -59,7 +57,6 @@ function App() {
           <Route path="get-chatbot" 
             element={<PrivateRoute element={<GetChatbot />} redirectToAdmin={true} />} />
 
-          {/* Protected Routes for Admin (with role check) */}
           <Route path="/admin/users" 
             element={<PrivateRoute element={<UserRoles />} requiredRole="admin" />} />
             <Route path="/admin/chat-logs" 
