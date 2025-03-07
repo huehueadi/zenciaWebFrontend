@@ -17,7 +17,7 @@ function Register() {
     
     try {
       // Send registration request to /register endpoint
-      const response = await fetch('https://vercel-bot-sigma-nine.vercel.app/v1/register', {
+      const response = await fetch('https://zencia-web-zeta.vercel.app/v1/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

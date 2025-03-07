@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Define the base URL for your API
-const API_BASE_URL = 'https://vercel-bot-sigma-nine.vercel.app/v1';
+const API_BASE_URL = 'https://zencia-web-zeta.vercel.app/v1';
 
 // Utility function to get the auth token from localStorage
 const getAuthToken = () => {

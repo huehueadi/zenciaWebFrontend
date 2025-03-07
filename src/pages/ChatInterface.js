@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 const ChatInterface = () => {
@@ -30,7 +30,7 @@ const ChatInterface = () => {
         const sessionId = localStorage.getItem("sessionId");
   
         // Send the request to the backend API with sessionId in the headers
-        const response = await fetch(`https://vercel-bot-sigma-nine.vercel.app/v1/chat/${userId}`, {
+        const response = await fetch(`https://zencia-web-zeta.vercel.app/v1/chat/${userId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

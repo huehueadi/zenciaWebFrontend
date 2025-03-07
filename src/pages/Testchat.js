@@ -84,7 +84,7 @@ const Testchat = () => {
       try {
         const sessionId = localStorage.getItem("sessionId");
 
-        const response = await fetch(`http://localhost:8080/v1/chat/${userId}`, {
+        const response = await fetch(`https://zencia-web-zeta.vercel.app/v1/chat/${userId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

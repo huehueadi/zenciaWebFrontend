@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Homepage.css';  // Add your custom styles for the page here.
+import './Homepage.css'; // Add your custom styles for the page here.
 
 function WebScraping() {
   // State for URL and scraping option
@@ -34,7 +34,7 @@ function WebScraping() {
 
     try {
       // Send POST request to the scraping API with Authorization token
-      const response = await fetch('https://vercel-bot-sigma-nine.vercel.app/v1/cheerio', {
+      const response = await fetch('https://zencia-web-zeta.vercel.app/v1/cheerio', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

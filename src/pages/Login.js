@@ -13,7 +13,7 @@ function Login() {
   
   try {
     // Make the login API request
-    const response = await fetch('https://vercel-bot-sigma-nine.vercel.app/v1/get', {
+    const response = await fetch('https://zencia-web-zeta.vercel.app/v1/get', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

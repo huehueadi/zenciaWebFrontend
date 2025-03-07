@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './Homepage.css';
 
 function Dashboard() {
@@ -45,7 +44,7 @@ function Dashboard() {
     console.log(chatbotId);
     
       try {
-        const response = await axios.get(`https://vercel-bot-sigma-nine.vercel.app/v1/most-asked/${chatbotId}`);
+        const response = await axios.get(`https://zencia-web-zeta.vercel.app/v1/most-asked/${chatbotId}`);
         console.log(response);
         
         // Ensure response data is an array before updating state
@@ -154,9 +153,6 @@ function Dashboard() {
   <p>You’re doing great! Your chatbot is performing better than ever today. 😎.</p>
   
   {/* Use Link for navigation */}
-  <Link to="/user-profile" className="btn btn-primary">
-    View Profile
-  </Link>
 </div>
           </div>
           <div className="col-md-6 text-center text-md-end order-1 order-md-2">
