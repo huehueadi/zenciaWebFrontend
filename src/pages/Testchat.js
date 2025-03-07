@@ -36,6 +36,7 @@ const Testchat = () => {
     }
   }, [language]); // Reinitialize when language changes
 
+  // Handle language change
   const handleLanguageChange = (newLanguage) => {
     if (isListening) {
       recognition?.stop();
@@ -43,6 +44,34 @@ const Testchat = () => {
     setLanguage(newLanguage);
   };
 
+  // Function to format response
+  const formatResponse = (response) => {
+    const phoneRegex = /\+?\d{1,3}[-\s]?\(?\d{1,4}\)?[-\s]?\d{1,4}[-\s]?\d{1,4}[-\s]?\d{1,4}/g;
+    const linkRegex = /https?:\/\/[^\s]+/g;
+    const bulletPointRegex = /\*\s*(.*)/g;
+
+    let formattedText = response;
+
+    // Replace phone numbers with formatted text
+    formattedText = formattedText.replace(phoneRegex, (match) => `<strong>${match}</strong>`);
+
+    // Replace links with anchor tags
+    formattedText = formattedText.replace(linkRegex, (match) => `<a href="${match}" target="_blank">${match}</a>`);
+
+    // Replace bullet points with <ul> <li> elements
+    formattedText = formattedText.replace(bulletPointRegex, (match, content) => {
+      return `<li>${content}</li>`;
+    });
+
+    // Wrap bullet points with <ul> tag
+    if (formattedText.includes("<li>")) {
+      formattedText = `<ul>${formattedText}</ul>`;
+    }
+
+    return formattedText;
+  };
+
+  // Send message function
   const sendMessage = async (msg) => {
     if (msg.trim()) {
       setMessages((prevMessages) => [
@@ -55,7 +84,7 @@ const Testchat = () => {
       try {
         const sessionId = localStorage.getItem("sessionId");
 
-        const response = await fetch(`https://zencia-web.vercel.app/v1/chat/${userId}`, {
+        const response = await fetch(`http://localhost:8080/v1/chat/${userId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -72,9 +101,10 @@ const Testchat = () => {
         }
 
         if (data.response) {
+          const formattedResponse = formatResponse(data.response); // Format the response text
           setMessages((prevMessages) => [
             ...prevMessages,
-            { text: data.response, type: "received", timestamp: new Date().toLocaleTimeString() }
+            { text: formattedResponse, type: "received", timestamp: new Date().toLocaleTimeString() }
           ]);
 
           // Text to Speech conversion in selected language
@@ -90,6 +120,7 @@ const Testchat = () => {
     }
   };
 
+  // Start speech recognition
   const startListening = () => {
     if (!recognition) return;
 
@@ -123,6 +154,7 @@ const Testchat = () => {
     }
   };
 
+  // Toggle speech recognition
   const toggleListening = () => {
     if (isListening) {
       recognition?.stop();
@@ -131,6 +163,7 @@ const Testchat = () => {
     }
   };
 
+  // Handle 'Enter' key press to send the message
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
@@ -138,11 +171,13 @@ const Testchat = () => {
     }
   };
 
+  // Minimize the chat
   const handleMinimize = () => {
     setIsMinimized(true);
     setShowChat(false);
   };
 
+  // Toggle chat visibility
   const handleChatButtonClick = () => {
     if (isMinimized) {
       setIsMinimized(false);
@@ -153,23 +188,30 @@ const Testchat = () => {
   };
 
   return (
-    < >
+    <>
+      {/* Chat Icon */}
       <div className="chat-icon" onClick={handleChatButtonClick}>
         <FaComments size={40} color="#fff" />
       </div>
 
+      {/* Chat Container */}
       {showChat && (
         <div className={`chat-container ${isMinimized ? 'minimized' : ''}`}>
           <div className="chat-header">
             <div className="header-left">
+              {/* Profile Section */}
               <div className="profile">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Profile" />
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces"
+                  alt="Profile"
+                />
                 <div className="profile-info">
                   <h2>Zencia AI</h2>
                 </div>
               </div>
             </div>
             <div className="header-right">
+              {/* Language Selector */}
               <div className="language-selector">
                 <select 
                   value={language}
@@ -183,6 +225,7 @@ const Testchat = () => {
                   ))}
                 </select>
               </div>
+              {/* Action Icons */}
               <FaDownload className="header-icon" title="Export Chat" />
               <FaShareAlt className="header-icon" title="Share Chat" />
               <FaTrashAlt className="header-icon" onClick={() => setShowDeleteConfirm(true)} title="Delete Chat" />
@@ -190,6 +233,7 @@ const Testchat = () => {
             </div>
           </div>
 
+          {/* Delete Confirmation Popup */}
           {showDeleteConfirm && (
             <div className="delete-popup">
               <div className="delete-popup-content">
@@ -202,11 +246,12 @@ const Testchat = () => {
             </div>
           )}
 
+          {/* Chat Messages */}
           <div className="chat-area">
             {messages.map((msg, index) => (
               <div key={index} className={`message ${msg.type === "sent" ? "sent" : "received"}`}>
                 <div className="message-content">
-                  <p>{msg.text}</p>
+                  <div dangerouslySetInnerHTML={{ __html: msg.text }}></div>
                   <span className="timestamp">{msg.timestamp}</span>
                 </div>
               </div>
@@ -220,6 +265,7 @@ const Testchat = () => {
             )}
           </div>
 
+          {/* Message Input Area */}
           {!isMinimized && (
             <div className="input-area">
               <textarea 
@@ -252,3 +298,5 @@ const Testchat = () => {
 };
 
 export default Testchat;
+
+

@@ -1,26 +1,26 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AdminChats from './admin/AdminChats';
+import AdminDashboard from './admin/AdminDashboard';
+import CreateRole from './admin/CreateRole';
+import UserRoles from './admin/Users';
+import TestSidebar from './components/TestSidebar';
 import Layout from './master/Layout';
-import Login from './pages/Login';
-import WebScraping from './pages/WebScrapping';
-import Register from './pages/Register';
-import UserProfile from './pages/UserProfile';
-import UserFeedback from './pages/UserFeedback';
+import Analytics from './pages/Analytics';
+import ChatInterface from './pages/ChatInterface';
 import Chats from './pages/Chats';
+import Dashboard from './pages/Dashboard';
 import GetChatbot from './pages/GetChatbot';
 import Leads from './pages/Leads';
-import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics';
-import AdminDashboard from './admin/AdminDashboard';
-import PrivateRoute from './services/PrivateRoute';
+import Login from './pages/Login';
 import NotAuthorise from './pages/NotAuthorise';
-import AdminChats from './admin/AdminChats';
-import UserRoles from './admin/Users';
-import CreateRole from './admin/CreateRole';
-import ChatInterface from './pages/ChatInterface';
+import Register from './pages/Register';
 import Testchat from './pages/Testchat';
-import TestSidebar from './components/TestSidebar';
+import UserFeedback from './pages/UserFeedback';
+import UserProfile from './pages/UserProfile';
 import VoiceChat from './pages/VoiceChat';
+import WebScraping from './pages/WebScrapping';
+import PrivateRoute from './services/PrivateRoute';
 
 function App() {
   return (
@@ -35,6 +35,7 @@ function App() {
         <Route path="/unauthorized" element={<NotAuthorise />} />
         <Route path="/chat-agent/:userid" element={<ChatInterface />} />
         <Route path="/chat-test/:userid" element={<Testchat />} />
+
 
         {/* Layout route, with protected sub-routes */}
         <Route element={<Layout />}>
