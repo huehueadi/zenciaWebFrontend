@@ -66,22 +66,23 @@ function Login() {
             <div className="app-brand justify-content-center mt-5">
               <a href="/" className="app-brand-link gap-2">
                 <span className="app-brand-logo demo">
-                  <span style={{ color: '#666cff' }}>
-                    {/* Add your logo or SVG here */}
-                    <img
-                      src="/assets/img/zenlogo.png" // Path to your logo image
-                      alt="Zencia Logo"
-                      width={40}  // Set the width of the logo
-                      height={40} // Set the height of the logo
-                      style={{
-                        marginTop: '5px', // Adjust top margin if needed
-                        marginRight: '10px', // Adjust right margin if needed
-                        marginBottom: '5px', // Adjust bottom margin if needed
-                      }}
-                    />
-                  </span>
+                <span style={{ color: "var(--bs-primary)" }}>
+            <img
+  src="/assets/img/1.svg"
+  alt="Zencia Logo"
+  width={185}
+  height={60}
+  style={{
+    marginTop: 0,
+    marginRight: '2px',
+    marginBottom: 0,
+    backgroundColor: 'transparent', // Setting background to transparent
+    objectFit: 'contain', // If needed to adjust image fit
+  }}
+/>
+
+            </span>
                 </span>
-                <span className="app-brand-text demo text-heading fw-semibold">Zenca.Ai</span>
               </a>
             </div>
             {/* /Logo */}

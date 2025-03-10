@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link } from 'react-router-dom';
 
 function Register() {
   const [username, setUsername] = useState(''); // Store username
@@ -17,7 +18,7 @@ function Register() {
     
     try {
       // Send registration request to /register endpoint
-      const response = await fetch('https://zencia-web-zeta.vercel.app/v1/register', {
+      const response = await fetch('https://zencia-web-ic1s.vercel.app/v1/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,18 +67,22 @@ function Register() {
             {/* Logo Section */}
             <div className="app-brand justify-content-center mt-5">
   <a href="/" className="app-brand-link gap-2">
-    <span className="app-brand-logo demo">
-      <img
-        src="/assets/img/zenlogo.png" // Path to your logo image
-        alt="Zencia Logo"
-        width={60} // Adjust width as needed
-        height={60} // Adjust height as needed
-        style={{
-          marginRight: "10px", // Adjust spacing between the logo and text
-        }}
-      />
-    </span>
-    <span className="app-brand-text demo text-heading fw-semibold">Zencia</span>
+  <span style={{ color: "var(--bs-primary)" }}>
+            <img
+  src="/assets/img/1.svg"
+  alt="Zencia Logo"
+  width={185}
+  height={60}
+  style={{
+    marginTop: 0,
+    marginRight: '2px',
+    marginBottom: 0,
+    backgroundColor: 'transparent', // Setting background to transparent
+    objectFit: 'contain', // If needed to adjust image fit
+  }}
+/>
+
+            </span>
   </a>
 </div>
 
@@ -114,41 +119,60 @@ function Register() {
                   <label htmlFor="username">Username</label>
                 </div>
 
-                {/* Password Field */}
-                <div className="mb-5 form-password-toggle">
-                  <div className="input-group input-group-merge">
-                    <div className="form-floating form-floating-outline">
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        className="form-control"
-                        name="password"
-                        placeholder="············"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
-                      <label htmlFor="password">Password</label>
-                    </div>
-                    <span
-                      className="input-group-text cursor-pointer"
-                      onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-                    >
-                      <i className={showPassword ? 'ri-eye-line' : 'ri-eye-off-line'} />
-                    </span>
-                  </div>
-                </div>
+              {/* Password Field */}
+             
+              <div className="mb-5 form-floating form-floating-outline">
+      <input
+        type={showPassword ? 'text' : 'password'} // Toggle between password and text input
+        id="password"
+        className="form-control"
+        name="password"
+        placeholder="············"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+      <label htmlFor="password">Password</label>
+
+      {/* Eye icon for showing/hiding the password */}
+      <span
+        className="cursor-pointer position-absolute"
+        style={{
+          right: '10px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          border: 'none', // Remove any border
+          background: 'transparent', // Remove background if needed
+          padding: 0, // Remove padding to make the icon fit better
+        }}
+        onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+      >
+        <i className={showPassword ? 'ri-eye-line' : 'ri-eye-off-line'} />
+      </span>
+    </div>
+
+
+
+
 
                 {/* Terms and Conditions Checkbox */}
                 <div className="mb-5">
-                  <div className="form-check mt-2">
-                    <input className="form-check-input" type="checkbox" id="terms-conditions" required />
-                    <label className="form-check-label" htmlFor="terms-conditions">
-                      I agree to
-                      <a href="javascript:void(0);">privacy policy &amp; terms</a>
-                    </label>
-                  </div>
-                </div>
+  <div className="form-check mt-2">
+    <input className="form-check-input" type="checkbox" id="terms-conditions" required />
+    <label className="form-check-label" htmlFor="terms-conditions">
+      I agree to
+      <a
+        href="https://www.zencia.ai/privacy-policy.html"
+        target="_blank" // This makes it open in a new tab
+        rel="noopener noreferrer" // For security reasons, especially when using target="_blank"
+        className="text-decoration-none text-blue"
+      >
+        privacy policy & terms
+      </a>
+    </label>
+  </div>
+</div>
+
 
                 {/* Submit Button */}
                 <div className="mb-5">
