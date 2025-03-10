@@ -19,50 +19,50 @@ function WebScraping() {
   const handleScrapeSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage(''); // Reset error message on each submission
-    setScrapedData(null); // Clear previous scraped data
-
-    // Retrieve the auth token from localStorage
+    setErrorMessage('');
+    setScrapedData(null);
+  
     const authToken = localStorage.getItem('authToken');
-    
     if (!authToken) {
       setErrorMessage('Authorization token is missing. Please log in first.');
       setLoading(false);
       return;
     }
-
-
+  
     try {
-      // Send POST request to the scraping API with Authorization token
       const response = await fetch('https://zenciaweb.onrender.com/v1/cheerio', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${authToken}`, // Add the token here
+          'Authorization': `${authToken}`,
         },
-        body: JSON.stringify({
-          url: url,  // URL entered by the user
-        }),
+        body: JSON.stringify({ url }),
       });
-
+  
+      // Log the status and response
+      console.log('Response Status:', response.status);
       const data = await response.json();
-
-      // Handle response from the API
-      if (data.success) {
-        // If the scrape was successful, display the results
-        setScrapedData(data.result || 'Scraping completed successfully.');
+      console.log('API Response:', data);
+  
+      if (response.ok) {
+        // If the status is 2xx, it means the request was successful
+        if (data.success) {
+          setScrapedData(data.result || 'Scraping completed successfully.');
+        } else {
+          setErrorMessage(data.message || 'Failed to start scraping.');
+        }
       } else {
-        // Handle failure
-        setErrorMessage(data.message || 'Failed to start scraping.');
+        // If the response is not OK, handle the error
+        setErrorMessage(`API responded with an error: ${response.status} ${response.statusText}`);
       }
     } catch (error) {
-      // Handle network or other errors
       setErrorMessage('An error occurred while scraping. Please try again.');
       console.error('Error scraping:', error);
     }
-
+  
     setLoading(false);
   };
+  
 
   return (
     <div className="content-wrapper">
