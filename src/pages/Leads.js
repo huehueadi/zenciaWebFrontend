@@ -1,6 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Leads() {
+  const [sessions, setSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Extract the chatbotId from localStorage
+    const chatbotId = localStorage.getItem('chatbotId'); // Assuming the key is 'chatbotId'
+
+    if (!chatbotId) {
+      setError('Chatbot ID is missing in localStorage.');
+      setLoading(false);
+      return;
+    }
+
+    // Fetch the API data
+    const fetchData = async () => {
+      const apiUrl = `https://zencia-web-ic1s.vercel.app/v1/check-sessions/${chatbotId}`; // Use the extracted chatbotId in the URL
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error('Failed to fetch sessions');
+        }
+        const data = await response.json();
+        
+        // Check if sessions are empty
+        if (data.sessions && data.sessions.length > 0) {
+          setSessions(data.sessions);
+        } else {
+          setSessions([]); // Set sessions to empty array to show "No chats found" in the table
+        }
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <div className="content-wrapper">
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -10,74 +59,48 @@ function Leads() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Client</th>
-                  <th>Users</th>
-                  <th>Username</th> {/* Added Username column */}
-                  <th>Email</th> {/* Added Email column */}
-                  <th>Contact</th> {/* Added Contact column */}
-                  <th>Status</th>
+                  <th>Session ID</th>
+                  <th>Email</th>
+                  <th>Contact</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                <tr>
-                  <td>Albert Cook</td>
-                  <td>
-                    <ul className="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" className="avatar avatar-xs pull-up" title="Lilian Fuller">
-                        <img src="../../assets/img/avatars/5.png" alt="Avatar" className="rounded-circle" />
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" className="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                        <img src="../../assets/img/avatars/6.png" alt="Avatar" className="rounded-circle" />
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" className="avatar avatar-xs pull-up" title="Christina Parker">
-                        <img src="../../assets/img/avatars/7.png" alt="Avatar" className="rounded-circle" />
-                      </li>
-                    </ul>
-                  </td>
-                  <td>albert_cook01</td> {/* Added Username */}
-                  <td>albert.cook@example.com</td> {/* Added Email */}
-                  <td>(123) 456-7890</td> {/* Added Contact */}
-                  <td><span className="badge rounded-pill bg-label-primary me-1">Active</span></td>
-                </tr>
-                <tr>
-                  <td>Barry Hunter</td>
-                  <td>
-                    <ul className="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" className="avatar avatar-xs pull-up" title="Lilian Fuller">
-                        <img src="../../assets/img/avatars/5.png" alt="Avatar" className="rounded-circle" />
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" className="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                        <img src="../../assets/img/avatars/6.png" alt="Avatar" className="rounded-circle" />
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" className="avatar avatar-xs pull-up" title="Christina Parker">
-                        <img src="../../assets/img/avatars/7.png" alt="Avatar" className="rounded-circle" />
-                      </li>
-                    </ul>
-                  </td>
-                  <td>barry_hunter98</td> {/* Added Username */}
-                  <td>barry.hunter@example.com</td> {/* Added Email */}
-                  <td>(234) 567-8901</td> {/* Added Contact */}
-                  <td><span className="badge rounded-pill bg-label-success me-1">Completed</span></td>
-                </tr>
-                {/* Repeat for other rows */}
+                {sessions.length > 0 ? (
+                  sessions.map((session) => (
+                    <tr key={session._id}>
+                      <td>{session._id}</td> {/* Use session._id or any other identifier */}
+                      <td>{session.messages[0].includes('@') ? session.messages[0] : 'No email found'}</td> {/* Check if it's an email */}
+                      <td>{session.messages[0].match(/\d{10}/) ? session.messages[0] : 'No contact number found'}</td> {/* Match contact number */}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3" className="text-center">No chats found</td> {/* No chats message */}
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
       <footer className="content-footer footer bg-footer-theme">
-  <div className="container-xxl">
-    <div className="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-      <div className="text-body mb-2 mb-md-0">
-        © 2025, All rights reserved to <strong>Zencia</strong>
-      </div>
-      <div className="d-none d-lg-inline-block">
-        <a href="#" className="footer-link me-4" target="_blank">Terms & Contions</a>
-        <a href="https://pixinvent.ticksy.com/" target="_blank" className="footer-link d-none d-sm-inline-block">Support</a>
-      </div>
-    </div>
-  </div>
-</footer>
+        <div className="container-xxl">
+          <div className="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+            <div className="text-body mb-2 mb-md-0">
+              © 2025, All rights reserved to <strong>Zencia</strong>
+            </div>
+            <div className="d-none d-lg-inline-block">
+              <a href="#" className="footer-link me-4" target="_blank" rel="noopener noreferrer">
+                Terms & Conditions
+              </a>
+              <a href="https://pixinvent.ticksy.com/" target="_blank" className="footer-link d-none d-sm-inline-block" rel="noopener noreferrer">
+                Support
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

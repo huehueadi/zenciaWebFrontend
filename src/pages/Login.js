@@ -6,51 +6,55 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [loading, setLoading] = useState(false); // State to manage loading button
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  try {
-    // Make the login API request
-    const response = await fetch('https://zencia-web-zeta.vercel.app/v1/get', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: email, password }),
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    setLoading(true); // Set loading to true when the request starts
 
-    const data = await response.json();
+    try {
+      // Make the login API request
+      const response = await fetch('https://zencia-web-ic1s.vercel.app/v1/get', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: email, password }),
+      });
 
-    if (data.success) {
-      // If login is successful, store the token and user details in localStorage
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('user', JSON.stringify(data.payload)); // Store the user details
+      const data = await response.json();
 
-      // Assuming the role is inside the payload and is either 'admin' or 'user'
-      const userRole = data.payload.role; 
-      localStorage.setItem('userRole', userRole); // Store the user role
+      if (data.success) {
+        // If login is successful, store the token and user details in localStorage
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('user', JSON.stringify(data.payload)); // Store the user details
 
-      localStorage.setItem('chatbotId', data.payload.userId); // Store chatbotId as userId
+        // Assuming the role is inside the payload and is either 'admin' or 'user'
+        const userRole = data.payload.role; 
+        localStorage.setItem('userRole', userRole); // Store the user role
 
-      // Redirect based on role
-      if (userRole === 'admin') {
-        navigate('/admin/dashboard'); // Admins are redirected to admin dashboard
+        localStorage.setItem('chatbotId', data.payload.userId); // Store chatbotId as userId
+
+        // Redirect based on role
+        if (userRole === 'admin') {
+          navigate('/admin/dashboard'); // Admins are redirected to admin dashboard
+        } else {
+          navigate('/dashboard'); // Regular users are redirected to user dashboard
+        }
       } else {
-        navigate('/dashboard'); // Regular users are redirected to user dashboard
+        // Handle login failure
+        setErrorMessage(data.message);
       }
-    } else {
-      // Handle login failure
-      setErrorMessage(data.message);
+    } catch (error) {
+      // Handle any network or server error
+      setErrorMessage('An error occurred while logging in. Please try again.');
+      console.error('Login error:', error);
+    } finally {
+      setLoading(false); // Reset loading state when request is done
     }
-  } catch (error) {
-    // Handle any network or server error
-    setErrorMessage('An error occurred while logging in. Please try again.');
-    console.error('Login error:', error);
-  }
-};
-
+  };
 
   return (
     <div className="position-relative">
@@ -61,23 +65,22 @@ function Login() {
             {/* Logo */}
             <div className="app-brand justify-content-center mt-5">
               <a href="/" className="app-brand-link gap-2">
-              <span className="app-brand-logo demo">
-  <span style={{ color: '#666cff' }}>
-    {/* Add your logo or SVG here */}
-    <img
-      src="/assets/img/zenlogo.png" // Path to your logo image
-      alt="Zencia Logo"
-      width={40}  // Set the width of the logo
-      height={40} // Set the height of the logo
-      style={{
-        marginTop: '5px', // Adjust top margin if needed
-        marginRight: '10px', // Adjust right margin if needed
-        marginBottom: '5px', // Adjust bottom margin if needed
-      }}
-    />
-  </span>
-</span>
-
+                <span className="app-brand-logo demo">
+                  <span style={{ color: '#666cff' }}>
+                    {/* Add your logo or SVG here */}
+                    <img
+                      src="/assets/img/zenlogo.png" // Path to your logo image
+                      alt="Zencia Logo"
+                      width={40}  // Set the width of the logo
+                      height={40} // Set the height of the logo
+                      style={{
+                        marginTop: '5px', // Adjust top margin if needed
+                        marginRight: '10px', // Adjust right margin if needed
+                        marginBottom: '5px', // Adjust bottom margin if needed
+                      }}
+                    />
+                  </span>
+                </span>
                 <span className="app-brand-text demo text-heading fw-semibold">Zenca.Ai</span>
               </a>
             </div>
@@ -104,54 +107,36 @@ function Login() {
                   <label htmlFor="email">Email or Username</label>
                 </div>
 
-                {/* <div className="mb-5">
-                  <div className="form-password-toggle">
-                    <div className="input-group input-group-merge"> */}
-                    <div className="form-floating form-floating-outline mb-5">
-                    <input
-                          type={showPassword ? 'text' : 'password'} // Toggle between password and text
-                          id="password"
-                          className="form-control"
-                          name="password"
-                          placeholder="············"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <label htmlFor="password">Password</label>
-                      </div>
-                      {/* <span 
-                        className="input-group-text cursor-pointer"
-                        onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-                      >
-                        <i className={showPassword ? 'ri-eye-line' : 'ri-eye-off-line'} /> 
-                      </span> */}
-                    {/* </div> */}
-                  {/* </div>
-                </div> */}
-
-                {/* <div className="mb-5 d-flex justify-content-between mt-5">
-                  <div className="form-check mt-2">
-                    <input className="form-check-input" type="checkbox" id="remember-me" />
-                    <label className="form-check-label" htmlFor="remember-me">
-                      Remember Me
-                    </label>
-                  </div>
-                  <a href="auth-forgot-password-basic.html" className="float-end mb-1 mt-2">
-                    <span>Forgot Password?</span>
-                  </a>
-                </div> */}
+                <div className="form-floating form-floating-outline mb-5">
+                  <input
+                    type={showPassword ? 'text' : 'password'} // Toggle between password and text
+                    id="password"
+                    className="form-control"
+                    name="password"
+                    placeholder="············"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <label htmlFor="password">Password</label>
+                </div>
 
                 <div className="mb-5">
-                  <button className="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                  <button
+                    className="btn btn-primary d-grid w-100"
+                    type="submit"
+                    disabled={loading} // Disable button when loading is true
+                  >
+                    {loading ? 'Signing in...' : 'Sign in'}
+                  </button>
                 </div>
               </form>
 
               <p className="text-center">
-  <span>New on our platform?</span>
-  <a href="/register">
-    <span>Create an account</span>
-  </a>
-</p>
+                <span>New on our platform?</span>
+                <a href="/register">
+                  <span>Create an account</span>
+                </a>
+              </p>
 
             </div>
           </div>

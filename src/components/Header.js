@@ -59,9 +59,8 @@ function Header() {
                       </div>
                     </div>
                     <div className="flex-grow-1">
-                      {/* Replace hardcoded "John Doe" with dynamic username */}
                       <span className="fw-medium d-block small">{username}</span>
-                      <small className="text-muted">Admin</small>
+                      {/* <small className="text-muted">Admin</small> */}
                     </div>
                   </div>
                 </a>
@@ -69,18 +68,17 @@ function Header() {
               <li>
                 <div className="dropdown-divider" />
               </li>
-              <li>
-                {/* My Profile Link - updated */}
+              {/* <li>
                 <Link className="dropdown-item" to="/user-profile">
                   <i className="ri-user-3-line ri-22px me-3" /><span className="align-middle">My Profile</span>
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a className="dropdown-item" href="pages-account-settings-account.html">
                   <i className="ri-settings-4-line ri-22px me-3" /><span className="align-middle">Settings</span>
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a className="dropdown-item" href="pages-account-settings-billing.html">
                   <span className="d-flex align-items-center align-middle">
                     <i className="flex-shrink-0 ri-file-text-line ri-22px me-3" />
@@ -88,20 +86,20 @@ function Header() {
                     <span className="flex-shrink-0 badge badge-center rounded-pill bg-danger">4</span>
                   </span>
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <div className="dropdown-divider" />
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a className="dropdown-item" href="pages-pricing.html">
                   <i className="ri-money-dollar-circle-line ri-22px me-3" /><span className="align-middle">Pricing</span>
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a className="dropdown-item" href="pages-faq.html">
                   <i className="ri-question-line ri-22px me-3" /><span className="align-middle">FAQ</span>
                 </a>
-              </li>
+              </li> */}
               {/* Logout option */}
               <li>
                 <div className="d-grid px-4 pt-2 pb-1">

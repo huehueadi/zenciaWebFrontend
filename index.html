@@ -121,13 +121,32 @@
 </head>
 <body>
 <h1>hello chatbot</h1>
-<iframe 
-    src="https://bot-frontend-c64w.vercel.app/chat-test/72fe8742-d3b7-4797-9730-215627a9cd6f" 
-    width="100%" 
-    height="700px" 
-    frameborder="0" 
-    scrolling="yes">
-  </iframe>
+
+<div id="chatbot-widget"></div>
+<script src="https://chatbotui-ng3v.vercel.app/chatbot-widget.bundle.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM loaded, checking for ChatbotWidget");
+
+    const apiUrl = 'https://zenciaweb.onrender.com/v1/chat/84f5ace1-236a-427e-8166-80d4741855ae'; 
+
+    const config = {
+      apiUrl: apiUrl
+    };
+
+    if (window.ChatbotWidget && typeof window.ChatbotWidget.init === 'function') {
+      window.ChatbotWidget.init('chatbot-widget', config);
+      console.log("ChatbotWidget initialized via init method with API URL");
+    } else if (window.initChatbot && typeof window.initChatbot === 'function') {
+      window.initChatbot('chatbot-widget', config);
+      console.log("ChatbotWidget initialized via initChatbot function with API URL");
+    } else {
+      console.error('No compatible initialization method found for ChatbotWidget');
+      console.log('Available methods:', window.ChatbotWidget);
+    }
+  });
+</script>
+
 
 </body>
 </html>

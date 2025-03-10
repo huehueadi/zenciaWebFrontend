@@ -34,7 +34,7 @@ function WebScraping() {
 
     try {
       // Send POST request to the scraping API with Authorization token
-      const response = await fetch('https://zencia-web-zeta.vercel.app/v1/cheerio', {
+      const response = await fetch('https://zenciaweb.onrender.com/v1/cheerio', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

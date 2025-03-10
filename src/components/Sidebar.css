@@ -1,0 +1,5 @@
+img {
+    object-fit: contain; /* or cover */
+    background-color: transparent;
+  }
+  

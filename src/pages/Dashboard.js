@@ -41,10 +41,10 @@ function Dashboard() {
     const fetchMostAskedQuestions = async () => {
       setLoading(true);
       const chatbotId = localStorage.getItem('chatbotId');
-    console.log(chatbotId);
+      console.log(chatbotId);
     
       try {
-        const response = await axios.get(`https://zencia-web-zeta.vercel.app/v1/most-asked/${chatbotId}`);
+        const response = await axios.get(`https://zencia-web-ic1s.vercel.app/v1/most-asked/${chatbotId}`);
         console.log(response);
         
         // Ensure response data is an array before updating state
@@ -68,10 +68,16 @@ function Dashboard() {
       const chatbotId = localStorage.getItem('chatbotId'); // Get chatbotId from localStorage
 
       try {
-        const response = await axios.get(`https://vercel-bot-sigma-nine.vercel.app/v1/unanswered/${chatbotId}`);
-        setUnansweredData(response.data); // Set the unanswered questions data in state
+        const response = await axios.get(`https://zencia-web-ic1s.vercel.app/v1/unanswered/${chatbotId}`);
+        // Ensure response data is an array before updating state
+        if (Array.isArray(response.data)) {
+          setUnansweredData(response.data);
+        } else {
+          setUnansweredData([]); // Fallback to empty array if response is not an array
+        }
       } catch (error) {
         console.error('Error fetching unanswered questions:', error);
+        setUnansweredData([]); // Ensure state is still an array on error
       }
     };
 
@@ -79,7 +85,7 @@ function Dashboard() {
     const fetchSessionData = async () => {
       const chatbotId = localStorage.getItem('chatbotId'); // Get chatbotId from localStorage
       try {
-        const response = await axios.get(`https://vercel-bot-sigma-nine.vercel.app/v1/sessions/${chatbotId}`);
+        const response = await axios.get(`https://zencia-web-ic1s.vercel.app/v1/sessions/${chatbotId}`);
         setSessionsData(response.data); // Set session data in state
       } catch (error) {
         console.error('Error fetching session data:', error);
@@ -92,7 +98,7 @@ function Dashboard() {
     const fetchRetentionData = async () => {
       const chatbotId = localStorage.getItem('chatbotId'); // Get chatbotId from localStorage
       try {
-        const response = await axios.get(`https://vercel-bot-sigma-nine.vercel.app/v1/retention/${chatbotId}`);
+        const response = await axios.get(`https://zencia-web-ic1s.vercel.app/v1/retention/${chatbotId}`);
         setRetentionData(response.data); // Set retention data in state
       } catch (error) {
         console.error('Error fetching retention data:', error);
@@ -104,7 +110,7 @@ function Dashboard() {
       const token = getTokenFromLocalStorage(); // Get token
 
       try {
-        const response = await axios.get(`https://vercel-bot-sigma-nine.vercel.app/v1/messages/${chatbotId}`, {
+        const response = await axios.get(`https://zencia-web-ic1s.vercel.app/v1/messages/${chatbotId}`, {
           headers: {
             Authorization: token, // Pass token for authentication
           },
@@ -150,7 +156,7 @@ function Dashboard() {
   {/* Replace hardcoded "John" with the dynamic username */}
   <h4 className="card-title mb-4">Welcome <span className="fw-bold">{username}!</span> 🎉</h4>
   <p className="mb-0"></p>
-  <p>You’re doing great! Your chatbot is performing better than ever today. 😎.</p>
+  <p>You're doing great! Your chatbot is performing better than ever today. 😎.</p>
   
   {/* Use Link for navigation */}
 </div>
@@ -248,26 +254,29 @@ function Dashboard() {
         <div className="card-body">
           {loading ? (
             <p>Loading...</p> // Show loading message while fetching data
+          ) : mostAskedData.length === 0 ? (
+            <div className="text-center py-4">
+              <p className="mb-0">No record available</p>
+            </div>
           ) : (
             <ul className="p-0 m-0">
-  {(Array.isArray(mostAskedData) ? mostAskedData : []).map((question, index) => (
-
-    <li key={index} className="d-flex align-items-center mb-6">
-      <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-        <div className="me-2">
-          {/* Dot before the question text */}
-          <span className="dot">•</span> 
-          {/* Display question _id as the name */}
-          <h6 className="mb-1 d-inline">{question._id}</h6>
-        </div>
-        {/* Replace the count with the dollar price */}
-        <div className="badge bg-label-primary rounded-pill">
-          {question.count} {/* You can apply logic here to map count to dollar */}
-        </div>
-      </div>
-    </li>
-  ))}
-</ul>
+              {mostAskedData.map((question, index) => (
+                <li key={index} className="d-flex align-items-center mb-6">
+                  <div className="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                    <div className="me-2">
+                      {/* Dot before the question text */}
+                      <span className="dot">•</span> 
+                      {/* Display question _id as the name */}
+                      <h6 className="mb-1 d-inline">{question._id}</h6>
+                    </div>
+                    {/* Replace the count with the dollar price */}
+                    <div className="badge bg-label-primary rounded-pill">
+                      {question.count} {/* You can apply logic here to map count to dollar */}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       </div>
@@ -286,6 +295,10 @@ function Dashboard() {
     <div className="card-body">
       {loading ? (
         <p>Loading...</p> // Show loading message while fetching data
+      ) : unansweredData.length === 0 ? (
+        <div className="text-center py-4">
+          <p className="mb-0">No record available</p>
+        </div>
       ) : (
         <ul className="p-0 m-0">
           {unansweredData.map((question, index) => (

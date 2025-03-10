@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function GetChatbot() {
   const [chatbotId, setChatbotId] = useState(null);
+  const [copyMessage, setCopyMessage] = useState(""); // State for showing the "Copied" message
 
   // Get chatbot ID from localStorage
   useEffect(() => {
@@ -11,98 +12,125 @@ function GetChatbot() {
     }
   }, []);
 
-  // Function to copy text to clipboard
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("API Key copied to clipboard!");
+  // Function to copy script to clipboard
+  const copyScriptToClipboard = () => {
+    const scriptText = `
+      <div id="chatbot-widget"></div>
+      <script src="https://chatbotui-ng3v.vercel.app/chatbot-widget.bundle.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          console.log("DOM loaded, checking for ChatbotWidget");
+
+          const apiUrl = 'https://zenciaweb.onrender.com/v1/chat/${chatbotId}'; 
+
+          const config = {
+            apiUrl: apiUrl
+          };
+
+          if (window.ChatbotWidget && typeof window.ChatbotWidget.init === 'function') {
+            window.ChatbotWidget.init('chatbot-widget', config);
+            console.log("ChatbotWidget initialized via init method with API URL");
+          } else if (window.initChatbot && typeof window.initChatbot === 'function') {
+            window.initChatbot('chatbot-widget', config);
+            console.log("ChatbotWidget initialized via initChatbot function with API URL");
+          } else {
+            console.error('No compatible initialization method found for ChatbotWidget');
+            console.log('Available methods:', window.ChatbotWidget);
+          }
+        });
+      </script>
+    `;
+
+    navigator.clipboard.writeText(scriptText).then(() => {
+      setCopyMessage("Script copied!"); // Set the message when copied
+      setTimeout(() => setCopyMessage(""), 2000); // Clear the message after 2 seconds
     });
   };
 
   return (
-<div className="content-wrapper">
-  <div className="container-xxl flex-grow-1 container-p-y">
-    <div className="card mb-6">
-      <div className="card-body">
-        {/* New Heading for Trial Information */}
-        <h5 className="mb-4 text-danger">
-          Note: The script and API key are valid for only 15 days for trial purposes.
-        </h5>
+    <div className="container-xxl flex-grow-1 container-p-y">
+      <div className="card mb-6">
+        <div className="card-body">
+          {/* Trial Information Heading */}
+          <h5 className="mb-4 text-danger">
+            Note: The script and API key are valid for only 15 days for trial purposes.
+          </h5>
 
-        <h5>API Key List &amp; Access</h5>
-        <p className="mb-6">
-          An API key is a simple encrypted string that identifies an
-          application without any principal. They are useful for accessing
-          public data anonymously, and are used to associate API requests
-          with your project for quota and billing.
-        </p>
+          {/* Updated Heading */}
+          <h5>Embed the Script for Chatbot Integration</h5>
+          <p className="mb-6">
+            To integrate the chatbot into your webpage, copy the script provided below and embed it within your HTML. This script connects the chatbot to your project, and the API URL dynamically includes your unique chatbot ID.
+          </p>
 
-        {/* Display chatbot ID */}
-        {chatbotId ? (
-          <div className="row">
-            <div className="col-md-12">
-              <div className="bg-lighter rounded-3 p-4 mb-6">
-                <div className="d-flex align-items-center mb-2">
-                  <h6 className="mb-0 me-3">Chatbot ID</h6>
-                  <span className="badge bg-label-primary rounded-pill">
-                    Full Access
-                  </span>
-                </div>
-                <div className="d-flex align-items-center mb-2">
-                  <span className="me-3 fw-medium">{chatbotId}</span>
-                  <span className="cursor-pointer" onClick={() => copyToClipboard(chatbotId)}>
-                    <i className="ri-file-copy-line ri-20px" />
-                  </span>
+          {/* Display chatbot ID and Provide Embed Script */}
+          {chatbotId ? (
+            <div className="row">
+              <div className="col-md-12">
+                <div className="bg-lighter rounded-3 p-4 mb-6">
+                  <div className="d-flex align-items-center mb-2">
+                    <h6 className="mb-0 me-3">Chatbot Integration Script</h6>
+                    <span className="badge bg-label-primary rounded-pill">
+                      Full Access
+                    </span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <p className="me-3 fw-medium">
+                      Copy the script below to integrate the chatbot:
+                    </p>
+                  </div>
+
+                  {/* Provide the script block for copying */}
+                  <pre>
+                    <code>
+                      {`
+                        <div id="chatbot-widget"></div>
+                        <script src="https://chatbotui-ng3v.vercel.app/chatbot-widget.bundle.js"></script>
+                        <script>
+                          document.addEventListener('DOMContentLoaded', () => {
+                            console.log("DOM loaded, checking for ChatbotWidget");
+
+                            const apiUrl = 'https://zenciaweb.onrender.com/v1/chat/${chatbotId}'; 
+
+                            const config = {
+                              apiUrl: apiUrl
+                            };
+
+                            if (window.ChatbotWidget && typeof window.ChatbotWidget.init === 'function') {
+                              window.ChatbotWidget.init('chatbot-widget', config);
+                              console.log("ChatbotWidget initialized via init method with API URL");
+                            } else if (window.initChatbot && typeof window.initChatbot === 'function') {
+                              window.initChatbot('chatbot-widget', config);
+                              console.log("ChatbotWidget initialized via initChatbot function with API URL");
+                            } else {
+                              console.error('No compatible initialization method found for ChatbotWidget');
+                              console.log('Available methods:', window.ChatbotWidget);
+                            }
+                          });
+                        </script>
+                      `}
+                    </code>
+                  </pre>
+                  <button
+                    className="btn btn-primary"
+                    onClick={copyScriptToClipboard}
+                  >
+                    Copy Script
+                  </button>
+                  {/* Show "Copied" message when the script is copied */}
+                  {copyMessage && (
+  <span className="text-success ms-3 fw-bold" style={{ fontSize: '16px', color: '#28a745' }}>
+    {copyMessage}
+  </span>
+)}
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <p>No chatbot found in local storage.</p>
-        )}
-
-        {/* API Usage Instructions */}
-        <div className="mt-5">
-          <h6>How to Use the API</h6>
-          <p>
-            To interact with the chatbot, you can send a POST request to the following endpoint:
-          </p>
-          <code>https://bot-backend-main.onrender.com/chat/:chatbotid</code>
-          <p>
-            Replace <code>:chatbotid</code> with the actual chatbot ID. For example:
-          </p>
-          <code>https://bot-backend-main.onrender.com/chat/{chatbotId}</code>
-          <p>
-            The request body should be in the following format:
-          </p>
-          <pre>
-            {`
-{
-  "message": "hello"
-}
-`}
-          </pre>
-          <p>
-            This will send a message to the chatbot and receive a response. You can replace "hello" with any message you want the bot to respond to.
-          </p>
+          ) : (
+            <p>No chatbot found in local storage.</p>
+          )}
         </div>
       </div>
     </div>
-  </div>
-  <footer className="content-footer footer bg-footer-theme">
-    <div className="container-xxl">
-      <div className="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-        <div className="text-body mb-2 mb-md-0">
-          © 2025, All rights reserved to <strong>Zencia</strong>
-        </div>
-        <div className="d-none d-lg-inline-block">
-          <a href="#" className="footer-link me-4" target="_blank">Terms & Conditions</a>
-          <a href="https://pixinvent.ticksy.com/" target="_blank" className="footer-link d-none d-sm-inline-block">Support</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-</div>
-
   );
 }
 
