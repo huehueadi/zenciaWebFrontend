@@ -108,18 +108,37 @@ function Login() {
                   <label htmlFor="email">Email or Username</label>
                 </div>
 
-                <div className="form-floating form-floating-outline mb-5">
-                  <input
-                    type={showPassword ? 'text' : 'password'} // Toggle between password and text
-                    id="password"
-                    className="form-control"
-                    name="password"
-                    placeholder="············"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <label htmlFor="password">Password</label>
-                </div>
+
+    <div className="mb-5 form-floating form-floating-outline position-relative">
+      <input
+        type={showPassword ? 'text' : 'password'} // Toggle between password and text input
+        id="password"
+        className="form-control"
+        name="password"
+        placeholder="············"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <label htmlFor="password">Password</label>
+
+      {/* Eye icon to show/hide password */}
+      <span
+        className="cursor-pointer position-absolute"
+        style={{
+          right: '10px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          background: 'transparent', // No background
+          border: 'none', // No border
+          padding: 0, // No padding
+        }}
+        onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+      >
+        <i className={showPassword ? 'ri-eye-line' : 'ri-eye-off-line'} />
+      </span>
+    </div>
+
+
 
                 <div className="mb-5">
                   <button
